@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+        <title>Stran za ucitelje</title>
+    </h:head>
+	<h:body>
+        <h:form>
+            <h:commandButton id="nazaj" value="Nazaj na predmete"
+                         action="#{ucenecBean.linkNaPrejsnjo}" style="alignment: left"/>
+        </h:form>
+        <br></br>
+
+        <div style="float: left">
+            <h1>Ucenci</h1>
+            <h:form id="show">
+                <p><h:inputText
+                        a:placeholder="Ime ucenca"
+                        value="#{ucenecBean.ime}">
+                    </h:inputText>
+                    <h:inputText
+                        a:placeholder="Primek ucenca"
+                        value="#{ucenecBean.priimek}">
+                    </h:inputText>
+                    <i>Rojstni datum: <h:inputText id="bd" value="#{ucenecBean.rojstniDatum}">
+                        <f:convertDateTime pattern="dd.MM.yyyy" /></h:inputText>
+                        <h:message for="bd" style="color:red" /></i>
+
+
+                    <h:selectManyCheckbox value="#{ucenecBean.predmeti}" converter="#{converterForPredmet}">
+                        <f:selectItems value="#{predmetBean.predmeti}" var="item" itemLabel="#{item.naslov}" itemValue="#{item}" />
+                    </h:selectManyCheckbox>
+
+
+                    <h:commandButton id="submitUcenec" value="Dodaj"
+                                     action="#{ucenecBean.dodajUcenca}" update=":show"/>
+
+                </p>
+
+
+                    <div style="border: dashed 1px">
+                       <ui:repeat value="#{ucenecBean.ucenci}" var="item">
+                            <h:outputText value="#{item.ime}"></h:outputText>&nbsp;&nbsp;&nbsp;
+                            <h:outputText value="#{item.priimek}" />&nbsp;&nbsp;&nbsp;
+                            <h:outputText value="#{item.datumRojstva}" />&nbsp;&nbsp;&nbsp;
+
+                            <h:commandButton id="submit" value="Izbrisi"
+                                         action="#{ucenecBean.izbrisiUcenca(item)}"/>
+                            <h:commandButton value="Uredi"
+                                     action="#{ucenecBean.nastaviVrednosti(item)}"/>
+
+                            <br></br>
+                        </ui:repeat>
+                    </div>
+
+
+
+            </h:form>
+        </div>
+        <div style="float: right">
+            <h1>Ucitelji</h1>
+            <h:form>
+                <p><h:inputText
+                        id="uciteljIme"
+                        a:placeholder="Ime ucitelja"
+                        value="#{uciteljBean.ime}">
+                </h:inputText>
+                    <h:inputText
+                            id="uciteljPriimek"
+                            a:placeholder="Priimek ucitelja"
+                            value="#{uciteljBean.priimek}">
+                    </h:inputText>
+
+                    <h:selectManyCheckbox value="#{uciteljBean.predmeti}" converter="#{converterForPredmet}">
+                        <f:selectItems value="#{predmetBean.predmeti}" var="item" itemLabel="#{item.naslov}" itemValue="#{item}" />
+                    </h:selectManyCheckbox>
+
+                    <h:commandButton id="submitUcitelj" value="Dodaj"
+                                     action="#{uciteljBean.dodajUcitelja}"/>
+                    &nbsp;
+                    <h:commandButton id="submitUcitelj1" value="Dodaj s pripadajocimi ucenci"
+                                     action="#{uciteljBean.dodajUciteljaZUcenci}"/>
+                </p>
+
+
+                <div style="border: dashed 1px">
+                    <ui:repeat value="#{uciteljBean.ucitelj}" var="item">
+                        <h:outputText value="#{item.ime}"></h:outputText>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:outputText value="#{item.priimek}" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:commandButton id="izbrisiUcitelja" value="Izbrisi" action="#{uciteljBean.izbrisiUcitelja(item)}"></h:commandButton>
+                        <h:commandButton id="urediUcitelja" value="Uredi" action="#{uciteljBean.nastaviVrednosti(item)}"></h:commandButton>
+                        <br></br>
+                    </ui:repeat>
+                </div>
+
+
+
+            </h:form>
+        </div>
+        
+    </h:body>
+</html>

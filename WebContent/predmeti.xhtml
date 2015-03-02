@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+  <title>Stran za predmete</title>
+ 
+</h:head>
+<body>
+<h1>Predmeti</h1>
+        <h:form>
+      		<p><h:inputText
+                	a:placeholder="Naslov predmeta"
+                    value="#{predmetBean.naslov}">
+                </h:inputText>
+                <h:inputText
+                    a:placeholder="Opis predmeta"
+                    value="#{predmetBean.opis}">
+                </h:inputText>
+                <i>Zacetek: <h:inputText id="dateZac" value="#{predmetBean.zacetek}">
+                	<f:convertDateTime pattern="dd.MM.yyyy" /></h:inputText>
+                	<h:message for="dateZac" style="color:red" /></i>
+                	
+                <i>Konec: <h:inputText id="dateKon" value="#{predmetBean.konec}">
+                	<f:convertDateTime pattern="dd.MM.yyyy" /></h:inputText>
+                	<h:message for="dateKon" style="color:red" /></i>
+               
+            
+                <h:commandButton id="submitPredmet" value="Dodaj"
+                                 action="#{predmetBean.dodajPredmet}"/>
+            </p>       
+             <p>
+            
+            
+                <ui:repeat value="#{predmetBean.predmeti}" var="item">
+		            <h:outputText value="#{item.naslov}"></h:outputText>&nbsp;&nbsp;&nbsp;&nbsp;
+		            <h:outputText value="#{item.opis}" />&nbsp;&nbsp;&nbsp;&nbsp;
+		            <h:outputText value="#{item.zacetek}" />&nbsp;&nbsp;&nbsp;&nbsp;
+		            <h:outputText value="#{item.konec}" />&nbsp;&nbsp;&nbsp;&nbsp;
+		            <h:commandButton id="izbrisiPredmet" value="Izbrisi" action="#{predmetBean.izbrisiPredmet(item)}"></h:commandButton>		        
+		            <h:commandButton id="urediPredmet" value="Uredi" action="#{predmetBean.nastaviVrednosti(item)}"></h:commandButton>		        
+		           
+		            <br></br>
+		        </ui:repeat> 
+              
+                
+            </p>    
+            <h:commandButton id="nadaljuj" value="Naslednji korak >"
+                                 action="#{predmetBean.linkNaNaslednjo}"/> 
+        </h:form>
+
+</body>
+</html>

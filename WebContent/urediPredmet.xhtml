@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+  <title>Uredi predmet</title>
+    <h:form>
+        <h:commandButton id="nazaj" value="Nazaj"
+                         action="#{predmetBean.linkNaPrejsnjo}" style="alignment: left"/>
+    </h:form>
+    <br></br>
+  <h1>Urejanje predmeta</h1>
+
+        <h:form>
+        		<h:inputHidden
+                    value="#{predmetBean.id}">
+                </h:inputHidden>
+
+
+
+
+      		<p><h:inputText
+                	a:placeholder="Naslov predmeta"
+                    value="#{predmetBean.naslov}">
+                </h:inputText>
+                <h:inputText
+                    a:placeholder="Opis predmeta"
+                    value="#{predmetBean.opis}">
+                </h:inputText>
+                <i>Zacetek: <h:inputText id="dateZac" value="#{predmetBean.zacetek}">
+                	<f:convertDateTime pattern="dd.MM.yyyy" /></h:inputText>
+                	<h:message for="dateZac" style="color:red" /></i>
+                	
+                <i>Konec: <h:inputText id="dateKon" value="#{predmetBean.konec}">
+                	<f:convertDateTime pattern="dd.MM.yyyy" /></h:inputText>
+                	<h:message for="dateKon" style="color:red" /></i>
+               
+            
+
+            </p>
+            <br></br>
+            <p style="font-size: x-small">Pred ureditvijo naslednji podrocij je potrebno vnesti ucitelje in ucence.</p>
+            <h2>Nosilec: </h2><h3><h:outputText value="#{predmetBean.ucitelj.ime} #{predmetBean.ucitelj.priimek}"></h:outputText></h3>
+            <i>Sprememba nosilca:  </i>
+            <h:selectOneListbox value="#{predmetBean.ucitelj}">
+                <f:selectItems value="#{uciteljBean.ucitelj}" var="item" itemLabel="#{item.ime} #{item.priimek}" itemValue="#{item}"></f:selectItems>
+            </h:selectOneListbox>
+            <br></br>
+            <br></br>
+            <h:commandButton value="Odstrani nosilca" action="#{predmetBean.odstraniUcitelja}"></h:commandButton><i>  Predmet bo brez nosilca...</i>
+            <br></br>
+            <br></br>
+            <br></br>
+            <b>Ucenci:</b>
+            <br></br>
+
+
+
+            <h:selectManyCheckbox value="#{predmetBean.ucenci}" converter="#{converterForUcenec}">
+                <f:selectItems value="#{ucenecBean.ucenci}" var="item" itemLabel="#{item.ime} #{item.priimek}" itemValue="#{item}" />
+            </h:selectManyCheckbox>
+
+            <h:commandButton id="submitPredmet" value="Potrdi ureditev"
+                             action="#{predmetBean.urediPredmet}"/>
+     </h:form>
+ 
+</h:head>
+<body>
+
+</body>
+</html>

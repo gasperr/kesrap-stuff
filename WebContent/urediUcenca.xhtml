@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+        <title>Urejanje osebe</title>
+    </h:head>
+	
+<body>
+<h1><u>Uredi ucenca:</u>  <h:outputLabel value=" #{ucenecBean.ime}"></h:outputLabel> <h:outputLabel value=" #{ucenecBean.priimek}"></h:outputLabel></h1>
+        <h:form>
+      		<p><h:inputText
+                    value="#{ucenecBean.ime}">
+                </h:inputText>
+                <h:inputText
+                    value="#{ucenecBean.priimek}">
+                </h:inputText>
+                <h:inputHidden
+                    value="#{ucenecBean.id}">
+                </h:inputHidden>
+                <i>Rojstni datum: <h:inputText id="bd" value="#{ucenecBean.rojstniDatum}">
+                    <f:convertDateTime pattern="dd.MM.yyyy" /></h:inputText>
+                    <h:message for="bd" style="color:red" /></i>
+            
+
+
+            </p>
+            <br></br>
+            <b>Predmeti:</b>
+            <br></br>
+            <h:selectManyCheckbox value="#{ucenecBean.predmeti}" converter="#{converterForPredmet}">
+                <f:selectItems value="#{predmetBean.predmeti}" var="item" itemLabel="#{item.naslov}" itemValue="#{item}" />
+                <br></br>
+            </h:selectManyCheckbox>
+
+            <br></br>
+            <h:commandButton id="submit" value="Potrdi spremembe"
+                             action="#{ucenecBean.urediUcenca}"/>
+
+
+        </h:form>
+</body>
+</html>
